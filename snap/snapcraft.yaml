@@ -1,6 +1,6 @@
 name: node-cert-exporter
 base: core22
-version: v1.1.4 # tracking the upstream project
+adopt-info: node-cert-exporter
 summary: Node Cert Exporter
 description: |
   Node Cert Exporter (node-cert-exporter) is an exporter that exposes
@@ -22,10 +22,14 @@ parts:
   node-cert-exporter:
     plugin: go
     source: https://github.com/amimof/node-cert-exporter.git
-    source-tag: $SNAPCRAFT_PROJECT_VERSION
+    source-tag: v1.1.4
     source-type: git
     build-snaps:
       - go
+    override-pull: |
+      craftctl default
+      TAG=$(git describe --tags --abbrev=10)
+      craftctl set version="${TAG#v}"
   scripts:
     plugin: dump
     source: scripts
