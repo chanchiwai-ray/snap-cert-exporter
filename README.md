@@ -19,14 +19,22 @@ $ curl localhost:9117/metrics
 
 **(Optional)** If the `system-files` interface is not connected automatically,
 you can connect the `system-files` interface manually, this will allow the snap
-to have read access to some directories in your host's `/etc`, which is needed
-for the exporter to read your certificates:
+to have read access to some directories in your host's `/etc` (`/etc/ovn` and
+`/etc/neutron` in particular), which is needed for the exporter to read your
+certificates:
 
 ```bash
-$ snap connect node-cert-exporter:etc
+$ snap connect node-cert-exporter:etc-ovn
+$ snap connect node-cert-exporter:etc-neutron
 ```
 
 ## Snap Configuration
+
+By default, the snap will read and expose the expiration information of the
+certificates reside in `/etc/ovn` and `/etc/neutron` with the extension of
+[".pem", ".crt", ".cert", ".cer", ".pfx"] to Prometheus as metrics. However, you
+can still fine-tune what certificates (within `/etc/ovn` and `/etc/neutron`) to
+be included of the exporter via the snap configuration.
 
 You can get a list of supported snap configuration via
 
@@ -35,19 +43,19 @@ $ snap get node-cert-exporter
 ```
 
 You can change the default configuration by running `snap set node-cert-exporter
-<key>=<value>`. For example, you can change the `exclude-glob` option to
-skip all the certificates file under `/etc/ssl/certs/`.
+<key>=<value>`. For example, you can include the certificates without the
+appropriate extensions:
 
 ```bash
-$ snap set node-cert-exporter exclude-glob="/etc/ssl/certs/*"
+$ snap set node-cert-exporter include-glob="/etc/ovn/cert_host"
 ```
 
 You can also revert to the default vaule by running `snap unset
-node-cert-exporter <key>`. For example, you can revert the `exclude-glob`
+node-cert-exporter <key>`. For example, you can revert the `include-glob`
 option.
 
 ```bash
-$ snap unset node-cert-exporter exclude-glob
+$ snap unset node-cert-exporter include-glob
 ```
 
 ## Local Build and Testing
