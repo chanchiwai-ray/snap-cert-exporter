@@ -21,10 +21,7 @@ clean:
 	@snapcraft clean --use-lxd
 	@rm -rf ${SNAP_FILE}
 
-install:
-ifndef SNAP_FILE
-	$(error "You need to build the snap by running `make build` first")
-endif
+install: build
 	@echo "Installing the snap"
 	@snap install --devmode ${SNAP_FILE}
 
