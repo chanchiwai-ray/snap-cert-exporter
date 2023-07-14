@@ -5,10 +5,7 @@ summary: Node Cert Exporter
 description: |
   Node Cert Exporter (node-cert-exporter) is an exporter that exposes
   certificate expiration information for use by the Prometheus monitoring
-  system. By default, it will read and expose the expiration information of the
-  certificates reside in `/etc/ovn`, `/etc/neutron`, and `/etc/ssl/certs` to
-  Prometheus as metrics. However, you can still fine tune the behaviour of the
-  exporter via the snap configuration.
+  system.
 grade: stable
 confinement: strict
 
@@ -18,7 +15,8 @@ apps:
     restart-condition: on-abnormal
     command: "bin/node-cert-exporter.wrapper"
     plugs:
-      - etc
+      - etc-ovn
+      - etc-neutron
 
 parts:
   node-cert-exporter:
@@ -35,9 +33,11 @@ parts:
       node-cert-exporter.wrapper: "bin/node-cert-exporter.wrapper"
 
 plugs:
-  etc:
+  etc-ovn:
     interface: system-files
     read:
     - /etc/ovn
+  etc-neutron:
+    interface: system-files
+    read:
     - /etc/neutron
-    - /etc/ssl/certs
