@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+# Load utility functions
+. "$SNAP/utils.sh"
+
+# Set snap config options
+set_default listen ":9117"
+set_default path "/etc"
+set_default exclude-path ""
+set_default include-glob ""
+set_default exclude-glob ""
+set_default tls "false"
+set_default tls-cert-file ""
+set_default tls-key-file ""
+
+# Restart snap to apply new config.
+snapctl restart $SNAP_NAME

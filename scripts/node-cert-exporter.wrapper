@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+# Load utility functions
+. "$SNAP/utils.sh"
+
+# Start the exporter with config options
+exec "${SNAP}/bin/node-cert-exporter" \
+    $(safe_add_option listen) \
+    $(safe_add_option path) \
+    $(safe_add_option exclude-path) \
+    $(safe_add_option include-glob) \
+    $(safe_add_option exclude-glob) \
+    $(safe_add_option tls) \
+    $(safe_add_option tls-cert-file) \
+    $(safe_add_option tls-key-file)
