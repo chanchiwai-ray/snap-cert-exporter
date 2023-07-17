@@ -17,6 +17,7 @@ apps:
     plugs:
       - etc-ovn
       - etc-neutron
+      - network-bind
 
 parts:
   node-cert-exporter:

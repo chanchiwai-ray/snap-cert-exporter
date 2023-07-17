@@ -23,7 +23,7 @@ clean:
 
 install: build
 	@echo "Installing the snap"
-	@snap install --devmode ${SNAP_FILE}
+	@snap install --dangerous ${SNAP_FILE}
 
 uninstall:
 	@echo "Uninstalling the snap"
