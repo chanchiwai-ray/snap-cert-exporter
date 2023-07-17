@@ -46,7 +46,7 @@ jobs:
               exit 1
           fi
 
-          curl localhost:9117/metrics -s > /dev/null
+          curl --retry 4 --retry-connrefused localhost:9117/metrics -s > /dev/null
           status=$?
           if [ $status -ne 0 ]; then
               echo "Failed to reach the exporter!"
